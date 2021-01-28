@@ -11,7 +11,6 @@ xmile specific syntax.
 
 import sys
 import os.path
-import textwrap
 import pathlib
 import warnings
 from io import open
@@ -125,7 +124,9 @@ def build(elements, subscript_dict, namespace, outfile_name):
            'version': __version__}
 
     text = text.replace('\t', '    ')
-    text = black.format_file_contents(textwrap.dedent(text), fast=True,
+    text = "\n".join([t[4:] for t in text.split("\n")])
+
+    text = black.format_file_contents(text, fast=True,
                                       mode=black.FileMode())
 
     # this is needed if more than one model are translated in the same session
